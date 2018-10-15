@@ -1,0 +1,184 @@
+from tkinter import *
+#from multiprocessing import Process
+import qbank
+import ast
+import random
+import pyttsx3
+
+class QuizGUI:
+    #Initialize a new bank
+    bank = qbank.Bank()
+
+    #Define class level variables
+    nextquestion = None
+    choices = []
+
+    #Initialize text-to-speech engine
+    engine = pyttsx3.init()
+
+    def __init__(self, master):
+        self.master = master
+        master.title("Quizzer")
+
+
+
+        self.nextq()
+        #self.readq()
+
+
+    def update_form(self):
+        self.clear()
+        self.nextq()
+
+    def response_status(self, bgvar):
+
+        self.label = Frame(
+            self.master,
+            padx=30,
+            width=550,
+            height=30,
+            bg=bgvar,
+        )
+        self.label.grid(columnspan=2, sticky=N)
+
+    #TODO: This needs to be refactored, this function does too much.
+    def nextq(self):
+        #FIXME: Temporarily build the status bar
+        self.response_status('green')
+
+        print("Pulling next question...")
+
+
+        #Pop off next question
+        self.nextquestion = self.bank.query.pop()
+
+        #Print question data
+        print(f"Question: {self.nextquestion.query}\n",
+            f"Answer: {self.nextquestion.answer}\n",
+            f"Choices: {ast.literal_eval(self.nextquestion.choices)}\n")
+
+        #Adding multiple frames in grid
+        self.label_text = StringVar()
+        self.label_text.set(self.nextquestion.query)
+        self.label = Message(
+            self.master,
+            anchor=W,
+            padx=30,
+            width=550,
+            textvariable=self.label_text
+            )
+        self.label.grid(columnspan=2, sticky=W)
+
+        #Generates choices and
+        # returns the count of choices for button placement
+        count = self.gen_choices()
+
+        self.greet_button = Button(self.master, text="Next", command=self.update_form)
+        self.greet_button.grid(row=count + 2)
+
+        self.close_button = Button(self.master, text="Close", command=self.master.quit)
+        self.close_button.grid(row=count + 2, column=1)
+
+
+
+    def gen_choices(self):
+        #Setup the multiple choice answers and shuffle them.
+        self.choices = ast.literal_eval(self.nextquestion.choices)
+        random.shuffle(self.choices)
+
+        #Iterate over the choices
+        global answerList
+        answerList = dict()
+        global enabled
+        enabled = dict()
+
+
+        count = 0
+        self.vars=[]
+        for n in range(len(self.choices)):
+            var = IntVar()
+            #var = Variable()
+            self.vars.append(var)
+
+        for choice in self.choices:
+            choicetext = str(count + 1) + ": " + choice
+            answerList[count] = choicetext
+            enabled[count] = Variable()
+            #enabled[count] = choice
+            self.label_index = count
+            self.label_choice = StringVar()
+            self.label_choice.set(choicetext)
+            #self.checkbox[count] = Checkbutton(
+            self.label = Checkbutton(
+                self.master,
+                padx=30,
+                variable=self.vars[count],
+                command=self.check_selection,
+                textvariable=self.label_choice
+                )
+            #self.checkbox[count].grid(columnspan=2, sticky=W)
+            self.label.grid(columnspan=2, sticky=W)
+            #print(self.label.variable)
+            count = count + 1
+        return count
+
+
+    #Destroy every object on our form before rebuilding new question
+    def clear(self):
+        list = root.grid_slaves()
+        for l in list:
+            l.destroy()
+
+    def check_selection(self):
+        #print(answerList[self.label_index])
+        #print(self.label.getvar())
+        #print(", ".join(self.vars))
+        list_answers = []
+        answer_selection = []
+        correct_answers = []
+        for i in range(len(enabled)):
+            list_answers.append(self.vars[i].get())
+            #If the checkbox is selected, add to answer_selection list
+            if self.vars[i].get() == 1:
+                answer_selection.append(self.choices[i])
+            #print(self.vars[i].get())
+        print(list_answers)
+        #print(self.choices)
+        correct_answers.append(ast.literal_eval(self.nextquestion.answer))
+        #Sort the user's answers so we can compare for correctness
+        answer_selection.sort
+        print(f"Correct Answers: {correct_answers}\nSelected Answers: {answer_selection}")
+        if correct_answers == answer_selection:
+            print("Correct!")
+            #self.clear()
+            #self.response_status('green')
+            self.label.Frame(bg='green')
+        else:
+            print("Incorrect!")
+            #self.clear()
+            #self.response_status('red')
+
+            self.label.Frame(bg='red')
+
+
+
+
+root = Tk()
+my_gui = QuizGUI(root)
+root.mainloop()
+
+
+
+def readq():
+    #FIXME: This reads and prevents the windwo from rendering
+    #Test reading the question
+    my_gui.engine.say(self.nextquestion.query)
+    my_gui.engine.say("Is it?")
+    for choice in ast.literal_eval(my_gui.nextquestion.choices):
+        my_gui.engine.say(choice, "?")
+    my_gui.engine.setProperty('rate',100)  #100 words per minute
+    my_gui.engine.setProperty('volume',0.9)
+    #self.engine.setProperty('gender', 'female')
+    my_gui.engine.runAndWait()
+
+readq()

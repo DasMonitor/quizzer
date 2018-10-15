@@ -1,0 +1,121 @@
+from tkinter import *
+from multiprocessing import Process
+import qbank
+import ast
+import random
+import pyttsx3
+
+class MyFirstGUI:
+    #Initialize a new bank
+    bank = qbank.Bank()
+
+    #Define class level variables
+    nextquestion = None
+    choices = []
+
+    #Initialize text-to-speech engine
+    engine = pyttsx3.init()
+
+    def __init__(self, master):
+        self.master = master
+        master.title("Quizzer")
+
+        self.nextq()
+        #self.readq()
+
+
+    def update_form(self):
+        self.clear()
+        self.nextq()
+
+
+
+    #TODO: This needs to be refactored, this function does too much.
+    def nextq(self):
+        print("Pulling next question...")
+
+        #Pop off next question
+        self.nextquestion = self.bank.query.pop()
+        #Adding multiple frames in grid
+        self.label_text = StringVar()
+        self.label_text.set(self.nextquestion.query)
+        self.label = Message(
+            self.master,
+            anchor=W,
+            padx=30,
+            width=550,
+            textvariable=self.label_text
+            )
+        self.label.grid(columnspan=2, sticky=W)
+
+        #Generates choices and
+        # returns the count of choices for button placement
+        count = self.gen_choices()
+
+        self.greet_button = Button(self.master, text="Next", command=self.update_form)
+        self.greet_button.grid(row=count + 1)
+
+        self.close_button = Button(self.master, text="Close", command=self.master.quit)
+        self.close_button.grid(row=count + 1, column=1)
+
+
+
+    def gen_choices(self):
+        #Setup the multiple choice answers and shuffle them.
+        self.choices = ast.literal_eval(self.nextquestion.choices)
+        random.shuffle(self.choices)
+
+        #Iterate over the choices
+        global answerList
+        answerList = dict()
+
+        count = 0
+        for choice in self.choices:
+            choicetext = str(count + 1) + ": " + choice
+            answerList[count] = choicetext
+            self.label_index = count
+            self.label_choice = StringVar()
+            self.label_choice.set(choicetext)
+            #self.checkbox[count] = Checkbutton(
+            self.label = Checkbutton(
+                self.master,
+                padx=30,
+                onvalue=self.label_choice,
+                offvalue=None,
+                command=self.print_selection,
+                textvariable=self.label_choice
+                )
+            #self.checkbox[count].grid(columnspan=2, sticky=W)
+            self.label.grid(columnspan=2, sticky=W)
+            #print(self.label.variable)
+            count = count + 1
+        return count
+
+
+    #Destroy every object on our form before rebuilding new question
+    def clear(self):
+        list = root.grid_slaves()
+        for l in list:
+            l.destroy()
+
+    def print_selection(self):
+        #var_obj = var.get(key)
+        #print(var_obj.get())
+        #print(answerList[self.label_index])
+        #self.label.
+        #print(self.label.getvar())
+        pass
+
+    def readq(self):
+        #Now our window is rendered, let's read the question
+        #Test reading the question
+        self.engine.say(self.nextquestion.query)
+        self.engine.setProperty('rate',100)  #100 words per minute
+        self.engine.setProperty('volume',0.9)
+        #self.engine.setProperty('gender', 'female')
+        self.engine.runAndWait()
+
+
+root = Tk()
+my_gui = MyFirstGUI(root)
+root.mainloop()

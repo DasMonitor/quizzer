@@ -1,0 +1,166 @@
+#!/usr/bin/python3
+
+#This is the dbwriter function ripped from the original script to be called as a function versus
+# additional code in the original script.
+#TODO: FIXME: read config from file instead of having it all up in this script.
+
+from datetime import date, datetime, timedelta
+import mysql.connector
+from mysql.connector.constants import ClientFlag
+config = {
+        'user': 'root',
+        'password': 'think1@3$',
+        'host': 'localhost',
+        'database': 'questions',
+        'port': '3306',
+        }
+
+
+def db_writer(itemData,storeId,categoryId,cnx=None):
+    today = datetime.now().date()
+    #cnx = mysql.connector.connect(user='wmscanner', password='wmdb$3@1', database='deal_data')
+    #Sometimes items don't display an online price, let's work around that.
+    try:
+        msrp = int(itemData['data']['online']['price']['priceInCents'])
+    except KeyError:
+        msrp = int('999999')
+        pass
+    try:
+        stockstatus = str(itemData['data']['online']['inventory']['status'])
+    except KeyError:
+        stockstatus = str("N/A")
+        pass
+    try:
+        item_data = {
+                '`name`': str(itemData['data']['common']['name']),
+                'upc': str(itemData['data']['common']['productId']['upca']),
+                'msrp': msrp,
+                'salePrice': int(itemData['data']['inStore']['price']['priceInCents']),
+                'storeId': int(storeId),
+                '`status`': stockstatus,
+                'requestId': str(itemData['meta']['requestId']),
+                'webUrl': str(itemData['data']['common']['productUrl']),
+                'imageUrl': str(itemData['data']['common']['productImageUrl']),
+                'productId': str(itemData['data']['common']['productId']['productId']),
+                'sku': str(itemData['data']['common']['productId']['wwwItemId']),
+                'last_seen_date': today,
+                'categoryId': categoryId,
+                }
+        add_data_2db = ("INSERT INTO biochem "
+                        "(`name`, upc, msrp, salePrice, storeId, `status`, "
+                        "last_seen_date, webUrl, imageUrl, requestId, productId, sku, categoryId) "
+                        "VALUES (%(`name`)s, %(upc)s, %(msrp)s, %(salePrice)s, %(storeId)s, "
+                        "%(`status`)s, %(last_seen_date)s, %(webUrl)s, %(imageUrl)s, %(requestId)s, "
+                        "%(productId)s, %(sku)s, %(categoryId)s)")
+        if cnx == None:
+            cnx = mysql.connector.connect(**config)
+        cursor = cnx.cursor()
+        cursor.execute(add_data_2db, item_data)
+        cnx.commit()
+    except KeyError as keyerr:
+        #Janky logic to handle different types of input off of the same dictionary name
+        #FIXME: Look into separating the dictionary name for clearance deals, and maybe have it's own dbwriter function
+        try:
+            for i in range(0,99):
+                item_data = {
+                        '`name`': str(itemData['items'][(i)]['name']),
+                        'upc': str(itemData['items'][(i)]['upc']),
+                        'sku': str(itemData['items'][(i)]['itemId']),
+                        'msrp': str(itemData['items'][(i)]['msrp']),
+                        'salePrice': str(itemData['items'][(i)]['salePrice']),
+                        'webUrl': str('https://www.walmart.com'),
+                        'last_seen_date': today,
+                        }
+                        #FIXME: replace the webUrl thing
+                        #'webUrl': str('https://www.walmart.com' + itemData['items'][(i)]['attributes']['canonicalUrl']),
+                add_data_2db = ("INSERT INTO `walmart_clearance` "
+                                "(`name`, upc, sku, msrp, salePrice, last_seen_date, webUrl) "
+                                "VALUES (%(`name`)s, %(upc)s, %(sku)s, %(msrp)s, %(salePrice)s, %(last_seen_date)s, %(webUrl)s)")
+                #print(add_data_2db, item_data)
+                cnx = mysql.connector.connect(**config)
+                cursor = cnx.cursor()
+                cursor.execute(add_data_2db, item_data)
+                cnx.commit()
+
+        except IndexError:
+            # Rarely do we get the whole 100 entries from WMs API, so pass.
+            print("Went too far...")
+            pass
+    #Let's handle all other errors as just that - an error.  Close up shop and go home.
+    except:
+        cursor.close()
+        cnx.close()
+
+    #print(add_data_2db, item_data)
+    #cursor.execute(add_data_2db, item_data)
+    cursor.close()
+    cnx.close()
+
+
+def category_writer(cat_id,cat_name):
+    #Do category writes
+    print(cat_id, cat_name)
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    try:
+        cat_data = {
+                'cat_name': cat_name,
+                'cat_id': cat_id,
+                }
+        add_data_2db = ("INSERT INTO `walmart_categories` "
+                        "(cat_id, cat_name) "
+                        "VALUES (%(cat_id)s, %(cat_name)s)")
+        cursor.execute(add_data_2db, cat_data)
+        cnx.commit()
+    except:
+        print("Something went wrong writing categories.")
+        pass
+    cursor.close()
+    cnx.close()
+
+
+def store_data_writer(addressDict):
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    try:
+        add_data_2db = ("INSERT INTO `store_data` "
+                        "(storeId, state, zip, address, city, country, phone) "
+                        "VALUES (%(storeId)s, %(state)s, %(postalCode)s, %(address1)s, %(city)s, %(country)s, %(phone)s)")
+        cursor.execute(add_data_2db, addressDict)
+        cnx.commit()
+    except:
+        print("Something went wrong writing address data.")
+    cursor.close()
+    cnx.close()
+
+
+def category_initializer():
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    try:
+        init_db = ("TRUNCATE TABLE `walmart_categories`;")
+        cursor.execute(init_db)
+        cnx.commit()
+    except:
+        print("Something went wrong truncating category table.")
+    cursor.close()
+    cnx.close()
+
+def on_call(dataDictionary=None,writeType=None,categoryId=None):
+    #Ultimately this will tell the dbwriter which function to call in itself
+    # Normally an integer is passed from our main scripts
+    # If we pass a flag instead of an integer in writeType then we perform a different action
+    # writeType can be a storeId or a flag indicating which function to call
+    if isinstance(writeType, int):
+        db_writer(dataDictionary,writeType) #Send writeType to be interpreted as storeId
+    else:
+        category_writer(dataDictionary)
+
+def main(itemData,storeId):
+    db_writer(itemData,storeId)
+
+
+if __name__ == '__main__':
+    itemData = {}
+    storeId = int(0)
+    main(itemData,storeId)

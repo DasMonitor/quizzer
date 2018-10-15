@@ -1,0 +1,80 @@
+from tkinter import *
+import qbank
+import ast
+import random
+
+class MyFirstGUI:
+    #Initialize a new bank
+    bank = qbank.Bank()
+
+    #Define class level variables
+    nextquestion = None
+    choices = []
+
+    def __init__(self, master):
+        self.master = master
+        master.title("Quizzer")
+
+        self.nextq()
+
+
+    def update_form(self):
+        self.clear()
+        self.nextq()
+
+    #TODO: This needs to be refactored, this function does too much.
+    def nextq(self):
+        print("Pulling next question...")
+
+        #Pop off next question
+        self.nextquestion = self.bank.query.pop()
+        #Adding multiple frames in grid
+        self.label_text = StringVar()
+        self.label_text.set(self.nextquestion.query)
+        self.label = Message(
+            self.master,
+            anchor=W,
+            padx=30,
+            width=550,
+            textvariable=self.label_text
+            )
+        self.label.grid(columnspan=2, sticky=W)
+        #Generates choices and
+        # returns the count of choices for button placement
+        count = self.gen_choices()
+
+        self.greet_button = Button(self.master, text="Next", command=self.update_form)
+        self.greet_button.grid(row=count + 1)
+
+        self.close_button = Button(self.master, text="Close", command=self.master.quit)
+        self.close_button.grid(row=count + 1, column=1)
+
+    def gen_choices(self):
+        #Setup the multiple choice answers and shuffle them.
+        self.choices = ast.literal_eval(self.nextquestion.choices)
+        random.shuffle(self.choices)
+
+        #Iterate over the choices
+        count = 0
+        for choice in self.choices:
+            choicetext = str(count + 1) + ": " + choice
+            self.label_choice = StringVar()
+            self.label_choice.set(choicetext)
+            self.label = Checkbutton(
+                self.master,
+                padx=30,
+                textvariable=self.label_choice
+                )
+            self.label.grid(columnspan=2, sticky=W)
+            count = count + 1
+        return count
+
+    #Destroy every object on our form before rebuilding new question
+    def clear(self):
+        list = root.grid_slaves()
+        for l in list:
+            l.destroy()
+
+root = Tk()
+my_gui = MyFirstGUI(root)
+root.mainloop()

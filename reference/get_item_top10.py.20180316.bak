@@ -1,0 +1,56 @@
+#!/usr/bin/python3
+#from __future__ import print_function
+
+#from sku_to_upc import sku_or_upc
+import sku_to_upc
+import datetime
+import mysql.connector
+import sys
+import sanitizer
+
+def main(querydate, sortopts=None, searchwhat=None):
+    cnx = mysql.connector.connect(user='parsley',password='wmScanner!', database='deal_data')
+    cursor = cnx.cursor()
+    if searchwhat == "":
+        searchwhat = '077924043727'
+    
+    query = ("select last_seen_date, name, msrp, salePrice, storeId, imageUrl, upc, sku from deals where upc = "+ searchwhat +" and last_seen_date "+ querydate +" order by salePrice asc limit 10; ")
+    #print(query)
+    cursor.execute(query)
+    
+    itemDict = {}
+    count = int(0)
+    print("{:10} | {:12} | {:9} | {:8} | {:9} | {:9} | {}".format("Date", "UPC", "SKU", "Store ID", "MSRP", "Store Price", "Name"))
+    for (date, name, msrp, storePrice, storeId, imageUrl, upc, sku) in cursor:
+        itemname = (name[:48] + '..') if len(name) > 48 else name
+        #onlinePrice = onlinePrice // 100
+        #price = "$" + {storePrice:,.2f}
+        
+        itemDict[count] = { 
+                'imageUrl': imageUrl,
+                'name': name,
+                'storeId': storeId,
+                'upc': upc,
+                'sku': sku,
+                'msrp': ("${:8,.2f}".format((msrp / 100.00))),
+                'storePrice': ("${:8,.2f}".format((storePrice / 100.00))),
+                'date': date,
+            }
+        count += 1
+        print("{6} | {1} | {2:9} | {3:8} | ${4:8,.2f} | ${5:10,.2f} | {0} "
+                .format(itemname, upc, sku, storeId, (msrp / 100.00), (storePrice / 100.00), date))
+    cursor.close()
+    cnx.close()
+    return itemDict
+
+if __name__ == '__main__':
+    if len(sys.argv) == 2:
+        querydate = ('= curdate() -' + str(sanitizer.sanitize_num_input("How many days ago? ", int, None, 1, 30, range(1,30))))
+        searchwhere = str('where upc = ' + str(sku_or_upc()))
+        sortopts = ""
+    else:
+        querydate = '= curdate()'
+        upc = sku_to_upc.sku_or_upc()
+        searchwhere = str('where upc = ' + str(upc))
+        sortopts = ""
+    main(querydate,sortopts,searchwhere)

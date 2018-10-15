@@ -1,0 +1,290 @@
+A: She has a secondary respiratory problem.
+B: She has a chronic problem.
+C: She has anemia.
+D: She has a ˂gap.
+E: She has no underlying gas exchange problem in her lungs.
+A: Respiratory Acidosis
+B: Respiratory Alkalosis
+C: Metabolic Acidosis
+D: Metabolic Alkalosis
+E: a mixed Metabolic and Respiratory Acidosis
+A: CO2
+B: H+
+C: 2,3-bisphosphoglycerate, BPG.
+D: CO
+E: ATP
+A: -1
+B: 0
+C: +1
+D: +2
+E: +3
+A: creatine kinase levels
+B: hemoglobin levels
+C: cardiac troponin levels
+D: liver panel
+E: LDH levels
+A: Respiratory Acidosis
+B: Respiratory Alkalosis
+C: Metabolic Acidosis
+D: Metabolic Alkalosis
+E: Respiratory Acidosis with compensating Metabolic Alkalosis
+A: Hypocapnia
+B: Hypercapnea
+C: High temperature
+D: increased BPG
+E: elevated metabolism
+A: Elevated anion gap metabolic acidosis
+B: Normal anion gap metabolic acidosis
+C: Metabolic alkalosis
+D: Respiratory alkalosis
+E: Respiratory acidosis
+A: Respiratory acidosis
+B: Respiratory alkalosis
+C: Metabolic acidosis
+D: Metabolic alkalosis
+E: No disturbance; he is normal
+A: HbA1c
+B: Hb F
+C: glucose levels
+D: ˂gap
+E: Methemoglobin
+F: ketone bodies
+A: O2 binds cooperatively to hemoglobin but not myoglobin.
+B: Hemoglobin has a higher affinity for O2 than does myoglobin.
+C: Only myoglobin can transport CO2 in addition to O2.
+D: The conformation of myoglobin is mostly ˞helix while hemoglobin has little ˞helix.
+E: 2,3-bisphosphoglycerate binds only to myoglobin.
+A: Fibrates
+B: Fish oil
+C: Nicotinic acid
+D: Plasmapheresis
+E: Statin
+A: Myocardial Infarction (MI).
+B: skeletal muscle damage from the car accident.
+C: kidney failure.
+D: mutated CK isoform.
+E: CK1c.
+A: 100% saturated hemoglobin
+B: 6th iron ligand site is empty
+C: Iron is in the ferrous form (Fe+2)
+D: Iron is in the ferric form (Fe+3)
+E: CO saturated hemoglobin
+A: HbA is the most abundant hemoglobin in normal adults.
+B: Fetal blood has a lower affinity for oxygen than does adult blood because HbF has an increased affinity for 2,3-bisphosphoglycerate.
+C: The globin chain composition of HbF is ˞l
+D: HbA1c differs from HbA by a single, genetically determined amino acid substitution.
+E: HbA2 appears early in fetal life.
+A: They all occur as a result of excess reactive oxygen species.
+B: They are all stimulated by glycosylation.
+C: They are all the direct cause of the disease they are associated with.
+D: The aggregates are all composed of stacks of beta sheets.
+E: They all accumulate in the brain.
+A: An increase in the apparent Km.
+B: A decrease in the apparent Km.
+C: An increase in Vmax
+D: A decrease in Vmax
+E: A decrease in both the apparent Km and Vmax.
+A: 48 mm Hg
+B: 40 mm Hg
+C: 36 mm Hg
+D: 27 mm Hg
+E: 20 mm Hg
+A: 12
+B: 16
+C: 22
+D: 31
+E: 36
+A: 4 mM
+B: 8 mM
+C: 12 mM
+D: 32 mM
+E: 64 mM
+F: 72 mM
+A: The activation energy is decreased.
+B: The enzyme is not consumed in the reaction.
+C: The enzyme is stereospecific.
+D: The equilibrium of the reaction is unchanged.
+E: The catalyst is a protein.
+F: The velocity of the reaction is increased.
+A: ˞˟
+B: ˞l
+C: ˞ɣ
+D: l˟
+E: s˟
+A: the O2 curve is not shifted
+B: the O2 curve is right shifted and sigmoidal
+C: the O2 curve if left shifted
+D: the O2 curve is right shifted and hyperbolic
+E: the O2 curve is biphasic with a high and a low p50.
+F: the O2 curve is left shifted and saturates with four O2 bound at 100 mm Hg.
+A: be an analog of the transition state for the reaction
+B: bind tightly to the substrate
+C: alter the equilibrium of the reaction
+D: have a structure very similar to the substrate
+E: cause a mutation in the gene for the enzyme
+A: tryptophan, pehnylalanine, tyrosine
+B: asparate, glutamate, asparigine
+C: valine, leucine, isoleucine
+D: glycine, alanine, serine
+E: methionine, proline, cysteine
+A: Methanol
+B: Ethanol
+C: Polyethelene Glycol
+D: Aspirin
+E: Ammonia
+A: Enzymes alter ˂Go of a reaction.
+B: A high affinity of an enzyme for substrate is signified by a high Km value.
+C: The Km of an enzyme catalyzed reaction is decreased by the presence of a competitive inhibitor.
+D: When measuring the reaction velocity, the molar concentration of enzyme present has to be in excess over substrate.
+E: At a constant enzyme concentration, the reaction velocity increases with increasing substrate concentration until Vmax is reached.
+A: at least one reaction is spontaneous.
+B: both reactions have ˂Go >0.
+C: at least one reaction generates no heat.
+D: ˂G1 b˂G2 < 0.
+E: the second reaction is faster than the first.
+A: anemia
+B: anxiety attacks
+C: elevated levels of cations in the blood.
+D: elevated levels of 2'-3'-DPG (BPG).
+E: protein in the urine
+A: Bicarbonate
+B: CO2
+C: K+
+D: creatinine
+E: glucose
+A: K+
+B: Na+
+C: Mg+2
+D: Ca+2
+E: Mn+2
+A: Ligase
+B: Isomerase
+C: Lyase
+D: Hydrolase
+E: Transferase
+F: Oxidoreductase
+A: has free rotation.
+B: is ionized at physiologic pH.
+C: is cleaved by agents that denature proteins, such as organic solvents and high concentrations of urea.
+D: is stable to heating in strong acid.
+E: occurs most commonly in the trans configuration.
+A: The ˞helix can be composed of more than one polypeptide chain.
+B: ˟sheets exist only in the antiparallel form.
+C: ˟bends often contain proline.
+D: Domains are a type of secondary structure.
+E: The ˞bhelix is stabilized primarily by ionic interactions between the side chains of the amino acids.
+A: G to A
+B: G to E
+C: G to W
+D: G to R
+E: G to F
+A: its amino acid sequence
+B: Its corresponding nucleotide sequence
+C: the pairing of disulfide bonds
+D: the association between subunits
+E: the local conformations of the polypeptide chain.
+A: SDS polyacrylamide gel electrophoresis
+B: Western blotting
+C: Size exclusion chomatography
+D: Edman degadation
+E: PCR
+F: Ion exchange chromatography
+A: Leucine
+B: Glutamic acid
+C: Asparagine
+D: Arginine
+E: Cysteine
+A: -8
+B: -5
+C: 0
+D: +60
+E: +68
+A: The overall reaction will occur at a rapid rate.
+B: The overall reaction will reach equilibrium slowly.
+C: The overall reaction is spontaneous.
+D: The overall reaction is at equilibrium.
+E: The overall reaction is nonspontaneous.
+A: The entropy ( So) of the reaction is negative.
+B: The enthalpy ( Ho) of the reaction is positive.
+C: The equilibrium constant for the reaction is negative.
+D: The reaction is at equilibrium.
+E: Go will not influence the rate of the reaction.
+A: -3300 cal/mol
+B: -780 cal/mol
+C: 0 cal/mol
+D: +780 cal/mol
+E: +3300 cal/mol
+A: Respiratory Acidosis
+B: Respiratory Alkalosis
+C: Metabolic Acidosis
+D: Metabolic Alkalosis
+E: Respiratory and Metabolic Acidosis
+A: pH 7.4, CO2 = 40 mm Hg, HCO3 = 24 mM
+B: pH 7.46, CO2 = 52 mm Hg, HCO3 = 36 mM
+C: pH 7.32, CO2 = 30 mm Hg, HCO3 = 15 mM
+D: pH 7.7, CO2 = 40 mm Hg, HCO3 = 48 mM
+E: pH 7.22, CO2 = 60 mm Hg, HCO3 = 24 mM
+A: 0, it is at equilibrium
+B: 7.5
+C: -7.5
+D: 10.2
+E: -10.2
+A: 1%
+B: 9.1%
+C: 25%
+D: 45%
+E: 66%
+F: 91%
+A: 2.2
+B: 3.9
+C: 6.0
+D: 7.4
+E: 8.4
+F: 9.8
+A: 3.4
+B: 3.92
+C: 4.4
+D: 4.87
+E: 5.4
+A: 2.0
+B: 3.0
+C: 4.0
+D: 5.0
+E: 6.0
+A: 13
+B: 12.7
+C: 10
+D: 9.7
+E: 4.3
+F: 4.0
+A: fatty acids
+B: glucose
+C: glycogen
+D: proteins
+E: triacylglycerol
+A: Creutzfeldt-Jacob Disease.
+B: Huntington Disease
+C: Lesch-Nyhan Syndrome
+D: Osteogenesis imperfecta
+E: Sickle Cell Anemia
+A: hepatic glucogenesis
+B: hepatic glycogenesis
+C: hepatic glycogenolysis
+D: lipolysis
+E: skeletal muscle glycogenolysis
+A: 100%
+B: 50%
+C: 25%
+D: 12.5%
+E: ~0%
+A: compaction of nuclear DNA into chromatin
+B: hydrolysis of hydrogen peroxide to water and oxygen
+C: oxidation of fatty acids
+D: phosphorylation of mannose residues on other proteins
+E: synthesis of fatty acids
+A: oxidoreductases
+B: transferases
+C: hydrolases
+D: lyases
+E: isomerases
+F: ligases
