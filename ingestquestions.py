@@ -8,9 +8,9 @@ from datetime import date, datetime, timedelta
 import mysql.connector
 
 config = {
-        'user': 'root',
-        'password': 'think1@3$',
-        'host': 'localhost',
+        'user': 'quizzer',
+        'password': 'Quizdb$3@1',
+        'host': 'butane',
         'database': 'questions',
         'port': '3306',
         }
