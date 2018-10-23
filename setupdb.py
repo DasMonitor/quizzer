@@ -10,11 +10,21 @@ from datetime import date, datetime, timedelta
 from time import sleep
 import mysql.connector
 from mysql.connector import errorcode
+import configparser
+
+config = configparser.ConfigParser()
+config.read('/home/analog/quizzer.config')
 
 DB_NAME = 'questions'
 #DB_NAME = 'deal_test'
 
-cnx = mysql.connector.connect(user='root', password='think1@3$')
+cnx = mysql.connector.connect(
+       host=config['mysqlDB']['host'],
+       user=config['mysqlDB']['user'],
+       password=config['mysqlDB']['pass'],
+       database=config['mysqlDB']['db'],
+       port=config['mysqlDB']['port'],
+       )
 cursor = cnx.cursor()
 
 #typically we try to connect with error handling
