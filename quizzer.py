@@ -3,7 +3,7 @@ from tkinter import *
 import qbank
 import ast
 import random
-import pyttsx3
+#import pyttsx3
 
 #TODO: FIXME: This is hacked together... fix it.
 
@@ -16,7 +16,7 @@ class QuizGUI:
     choices = []
 
     #Initialize text-to-speech engine
-    engine = pyttsx3.init()
+#    engine = pyttsx3.init()
 
     def __init__(self, master):
         self.master = master
@@ -174,17 +174,17 @@ class QuizGUI:
             self.frame['bg'] = 'red'
 
 
-    def readq():
+#    def readq():
         #FIXME: This reads and prevents the windwo from rendering
         #Test reading the question
-        my_gui.engine.say(my_gui.nextquestion.query)
-        my_gui.engine.say("Is it?")
-        for choice in ast.literal_eval(my_gui.nextquestion.choices):
-            my_gui.engine.say(choice, "?")
-        my_gui.engine.setProperty('rate',100)  #100 words per minute
-        my_gui.engine.setProperty('volume',0.9)
-        #self.engine.setProperty('gender', 'female')
-        my_gui.engine.runAndWait()
+#        my_gui.engine.say(my_gui.nextquestion.query)
+#        my_gui.engine.say("Is it?")
+#        for choice in ast.literal_eval(my_gui.nextquestion.choices):
+#            my_gui.engine.say(choice, "?")
+#        my_gui.engine.setProperty('rate',100)  #100 words per minute
+#        my_gui.engine.setProperty('volume',0.9)
+#        #self.engine.setProperty('gender', 'female')
+#        my_gui.engine.runAndWait()
 
 root = Tk()
 my_gui = QuizGUI(root)

@@ -6,15 +6,10 @@
 
 from datetime import date, datetime, timedelta
 import mysql.connector
+import configparser
 
-config = {
-        'user': 'quizzer',
-        'password': 'Quizdb$3@1',
-        'host': 'butane',
-        'database': 'questions',
-        'port': '3306',
-        }
-
+config = configparser.ConfigParser()
+config.read('/home/analog/quizzer.config')
 
 def write_questions_2db(cnx=None):
 
@@ -58,7 +53,13 @@ def write_questions_2db(cnx=None):
                         "VALUES (%(question)s, %(choices)s, %(answers)s, %(num_right)s, %(num_wrong)s)"
                         )
         if cnx == None:
-            cnx = mysql.connector.connect(**config) #kwargs for config above
+            cnx = mysql.connector.connect(
+                    user = config['mysqlDB']['user'],
+                    password = config['mysqlDB']['pass'],
+                    host = config['mysqlDB']['host'],
+                    port = config['mysqlDB']['port'],
+                    database = config['mysqlDB']['db'],
+                    ) 
         cursor = cnx.cursor()
         cursor.execute(add_data_2db, qdata)
         count = count + 1

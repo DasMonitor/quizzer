@@ -1,0 +1,6 @@
+[mysqlDB]
+user = 'username'
+pass = 'password'
+db = 'database'
+host = 'hostname'
+port = 'port'

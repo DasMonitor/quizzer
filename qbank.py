@@ -1,13 +1,9 @@
 import mysql.connector
+import configparser
 import random
 
-config = {
-        'user': 'quizzer',
-        'password': 'Quizdb$3@1',
-        'host': 'butane.williams.local',
-        'database': 'questions',
-        'port': '3306',
-        }
+config = configparser.ConfigParser()
+config.read('/home/analog/quizzer.config')
 
 
 class Question:
@@ -36,7 +32,13 @@ class Bank(Question):
     deck of questions
     The Bank can be initialized with bank = Bank()
     '''
-    cnx = mysql.connector.connect(**config)
+    cnx = mysql.connector.connect(
+            host=config['mysqlDB']['host'],
+            user=config['mysqlDB']['user'],
+            password=config['mysqlDB']['pass'],
+            database=config['mysqlDB']['db'],
+            port=config['mysqlDB']['port'],
+            )
     cursor = cnx.cursor()
 
     dbquery = ("select question, choices, answers from biochem")
