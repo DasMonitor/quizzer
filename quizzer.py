@@ -18,9 +18,9 @@ class QuizGUI:
     #Initialize text-to-speech engine
 #    engine = pyttsx3.init()
 
-    def __init__(self, master):
-        self.master = master
-        master.title("Quizzer")
+    def __init__(self, main):
+        self.main = main
+        main.title("Quizzer")
         self.nextq()
         #self.readq()
 
@@ -31,14 +31,14 @@ class QuizGUI:
 
     def response_status(self, bgvar):
         self.frame = Frame(
-            self.master,
+            self.main,
             padx=30,
             width=550,
             height=30,
             bg=bgvar,
         )
         # self.frame_message = Message(
-        #     self.master,
+        #     self.main,
         #     padx=30,
         #     anchor=N,
         #     text='Question: '
@@ -66,7 +66,7 @@ class QuizGUI:
         self.label_text = StringVar()
         self.label_text.set(self.nextquestion.query)
         self.label = Message(
-            self.master,
+            self.main,
             anchor=W,
             padx=30,
             width=550,
@@ -78,7 +78,7 @@ class QuizGUI:
         self.gen_choices()
 
         self.next_button = Button(
-            self.master,
+            self.main,
             text="Next",
             command=self.update_form
         )
@@ -86,9 +86,9 @@ class QuizGUI:
         #self.next_button.bind('<Return>', self.nextq())
 
         self.close_button = Button(
-            self.master,
+            self.main,
             text="Close",
-            command=self.master.quit
+            command=self.main.quit
         )
         self.close_button.grid(
             row=self.next_button.grid_info()['row'],
@@ -128,7 +128,7 @@ class QuizGUI:
             self.label_choice.set(choicetext)
             #self.checkbox[count] = Checkbutton(
             self.label = Checkbutton(
-                self.master,
+                self.main,
                 padx=30,
                 variable=self.vars[count],
                 command=self.check_selection,
@@ -143,7 +143,7 @@ class QuizGUI:
 
     #Destroy every object on our form before rebuilding new question
     def clear(self):
-        list = root.grid_slaves()
+        list = root.grid_subordinates()
         for l in list:
             l.destroy()
 
